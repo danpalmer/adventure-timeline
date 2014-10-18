@@ -1,0 +1,14 @@
+<h1>Activities</h1>
+
+<table border="1">
+{% for activity in activities %}
+	<tr>
+		<td>{{ activity.recipient_country_code }}</td>
+		<td>{{ activity.recipient_region_code }}</td>
+		<td>{{ activity.date_start_planned }}</td>
+		<td>{{ activity.date_start_actual }}</td>
+		<td>{{ activity.date_end_planned }}</td>
+		<td>{{ activity.date_end_actual }}</td>
+	</tr>
+{% endfor %}
+</table>
