@@ -58,6 +58,7 @@ def query():
         activities.append({
             'id': activity.id,
             'content': activity.title,
+            'description': activity.description,
             'start': activity.get_start(),
             'end': activity.get_end(),
             'uri': activity.activity_website,
