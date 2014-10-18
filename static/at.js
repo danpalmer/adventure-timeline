@@ -40,8 +40,8 @@ $(document).ready(function(){
 		$('#dataset_'+g).change( loadDatasetFromForm.bind(g) );
 	}
 	$('#sectors').change(sectorChanged);
-	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
-	$.ajax( 'static/data/sectors.json' ).success( loadedSectors ).fail( dang );
+	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang.bind(this, "loading datasets failed") );
+	$.ajax( 'static/data/sectors.json' ).success( loadedSectors ).fail( dang.bind(this, "loading sectors failed") );
 	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
 	initMap();
 	loadTimeline();
@@ -140,7 +140,7 @@ function loadDataset(g,id)
 	var url = 'static/data/'+id+'.json';
 	graphs[g].dataset = datasetList[id];
 	$('#dataset-controls').html( "Loading..." );
-	$.ajax( url ).success( loadedDataset.bind(g) ).fail( dang );
+	$.ajax( url ).success( loadedDataset.bind(g) ).fail( dang.bind(this, "loadDataset failed") );
 }
 
 function loadedDataset(ajax)
@@ -165,9 +165,9 @@ function loadedDataset(ajax)
 	});
 }
 
-function dang()
+function dang(msg)
 {
-	alert( "something didn't work. We're too lazy to write good debug messages." );
+	alert( "DEFINITELY NOT AN ERROR.. but..." + msg );
 }
 
 function loadTimeline()
