@@ -28,7 +28,7 @@ $(document).ready(function(){
 	});
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
 	//loadDataset('aidflows');
-	loadTimeline('static/data/example-iati.json');
+	loadTimeline('/query?country_code=AFG');
 });
 
 var datasetList;
