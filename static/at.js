@@ -28,9 +28,9 @@ $(document).ready(function(){
 	});
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
 	//loadDataset('aidflows');
-	loadTimeline('static/data/example-iati.json');
 	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
 	initMap();
+	loadTimeline('/query?country_code=AFG&limit=1000');
 });
 
 function initMap()
@@ -82,7 +82,7 @@ var datasetList;
 function loadedList(ajax)
 {
 	datasetList = ajax;
-	for (var key in ajax) 
+	for (var key in ajax)
 	{
 		var option = "<option value='"+key+"'>"+ajax[key].name+"</option>";
 		$("#dataset").append(option);
@@ -98,7 +98,7 @@ function loadDataset(id)
 	$.ajax( url ).success( loadedDataset ).fail( dang );
 }
 
-function loadedDataset(ajax) 
+function loadedDataset(ajax)
 {
 	var g = 1;
 	var list = [];
@@ -123,7 +123,7 @@ function loadedDataset(ajax)
 	$('#dataset-controls select').change( function() {
 		setGraph( $( "#dataset-controls option:selected" ).val() );
 	});
-}	
+}
 
 function dang()
 {
@@ -137,21 +137,21 @@ function loadTimeline(url)
 
 function loadedTimeline( ajax )
 {
-	if( !timelinetl ) 
-	{ 
+	if( !timelinetl )
+	{
 		var containertl = document.getElementById('vis-tl');
-		timelinetl = new vis.Timeline(containertl, ajax, optionstl); 
+		timelinetl = new vis.Timeline(containertl, ajax.results, optionstl);
+		timelinetl.on( 'rangechange', function(c) {
+			if( Graph2d == null) { return; }
+			optionsg.start = c.start;
+			optionsg.end = c.end;
+			Graph2d.setOptions( optionsg );
+		});
 	}
 	else
 	{
 		timelinetl.setItems( ajax );
 	}
-	timelinetl.on( 'rangechange', function(c) {
-		if( Graph2d == null) { return; }
-		optionsg.start = c.start;
-		optionsg.end = c.end;
-		Graph2d.setOptions( optionsg );
-	});
 }
 
 
@@ -167,10 +167,10 @@ function setGraph( id)
 			data.push( {"x":key, "y":parseInt(dataset[key])/currentDataset.modifier } );
 		}
 	}
-	if( !Graph2d ) 
-	{ 
+	if( !Graph2d )
+	{
 		var containerg = document.getElementById('vis-g');
-		Graph2d = new vis.Graph2d(containerg, data, optionsg); 
+		Graph2d = new vis.Graph2d(containerg, data, optionsg);
 	}
 	Graph2d.setItems( data );
 	var axis_width = $('#vis-g .dataaxis').width()+1;
@@ -181,9 +181,8 @@ function setGraph( id)
 	Graph2d.setOptions( optionsg );
 }
 
-
 function d(x) 
 { 
-	alert(JSON.stringify(x)); 
+	alert(JSON.stringify(x));
 }
 

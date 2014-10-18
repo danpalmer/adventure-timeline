@@ -119,3 +119,13 @@ class RelatedActivity(BaseModel):
     class Meta:
         db_table = 'relatedactivity'
         # indexes = ('activity_id',)
+
+class Country(BaseModel):
+    name = CharField()
+    two_char_iso_code = CharField(max_length=2)
+    three_char_iso_code = CharField(max_length=3)
+    population = IntegerField()
+    gdp = BigIntegerField()
+
+    class Meta:
+        db_table = 'countries'
