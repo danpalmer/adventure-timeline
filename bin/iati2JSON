@@ -1,0 +1,42 @@
+#!/usr/bin/env php
+<?php
+
+$xmlFileName=$argv[1];
+$doc = new DOMDocument();
+$doc->load($xmlFileName);
+$data = array();
+    //{id: 4, content: 'item 4', start: '2013-04-16', end: '2013-04-19'},
+$id = 0;
+foreach( $doc->getElementsByTagName( "iati-activity" ) as $activity )
+{
+	$bits = array();
+	foreach( $activity->childNodes as $prop )
+	{
+		$a = $prop->attributes;
+		if( $prop->nodeName == "description" )
+		{
+			$bits['description'] = $prop->textContent;
+		}
+		if( $prop->nodeName == "title" )
+		{
+			$bits['content'] = $prop->textContent;
+		}
+		if( $prop->nodeName == "activity-date" )
+		{
+			if( $a->getNamedItem("type")->value == "start-actual" )
+			{
+				$bits['start'] = $a->getNamedItem( "iso-date" )->value;
+			}
+			if( $a->getNamedItem("type")->value == "end-actual" )
+			{
+				$bits['end'] = $a->getNamedItem( "iso-date" )->value;
+			}
+		}
+	}
+	if( @$bits['start'] && @$bits['end'] && @$bits['content'] )
+	{
+		$bits['id']=++$id;
+		$data []=$bits;
+	}
+}
+print json_encode( $data );

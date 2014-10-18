@@ -1,14 +1,147 @@
-<h1>Activities</h1>
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Adventure Timeline</title>
+  <script src="resources/jquery.js"></script>
+  <script src="resources/vis.js"></script>
+  <link href="resources/vis.css" rel="stylesheet" type="text/css" />
 
-<table border="1">
-{% for activity in activities %}
-	<tr>
-		<td>{{ activity.recipient_country_code }}</td>
-		<td>{{ activity.recipient_region_code }}</td>
-		<td>{{ activity.date_start_planned }}</td>
-		<td>{{ activity.date_start_actual }}</td>
-		<td>{{ activity.date_end_planned }}</td>
-		<td>{{ activity.date_end_actual }}</td>
-	</tr>
-{% endfor %}
-</table>
+
+  <style type="text/css">
+    body, html {
+      font-family: sans-serif;
+    }
+#controls {
+	position: absolute;
+	z-index: 5;
+}
+#vis-tl {
+	position: absolute;
+	width:100%;
+	height: 100%;
+	z-index: 2;
+
+	/* covering all the bases opacity */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	filter: alpha(opacity=80);
+	-moz-opacity:0.8;
+	-khtml-opacity: 0.8;
+	opacity: 0.8;
+}
+
+#vis-g {
+  position: absolute;
+  width:100%;
+  height: 100%;
+  z-index: 1;
+}
+.fill {
+  fill: green !important;
+  stroke-width: 4px !important;
+  stroke: green !important;
+}
+.point {
+  stroke: green !important;
+}
+.vis.timeline .item {
+  background-color: #dddddd;
+  border-color: #999999;
+}
+  
+  
+  </style>
+
+</head>
+<body>
+  <div id="vis-g"></div>
+  <div id="vis-tl"></div>
+  <div id='controls'>
+  <select id='dataset'>
+    <option value='aidflows'>Aid Flows</option>
+    <option value='foo'>foo</option>
+  </select>
+  <div id='dataset-controls'></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+
+  var containerg = document.getElementById('vis-g');
+  var itemsg = [
+      {x: '2010', y: 10},
+      {x: '2011', y: 25},
+      {x: '2012', y: 30},
+      {x: '2013', y: 10},
+      {x: '2014', y: 15}
+  ];
+
+  var datasetg = new vis.DataSet(itemsg);
+  var optionsg = {
+      shaded: true,
+      height: '100%',
+      start: '2004',
+      end: '2014'
+};
+  var Graph2d = new vis.Graph2d(containerg, datasetg, optionsg);
+  var axis_width = $('#vis-g .dataaxis').width()+1;
+  $('#vis-tl').css( 'margin-left', axis_width+"px" );
+  $('#vis-tl').css( 'width', $('#vis-g').width()-axis_width+"px" );
+
+  // DOM element where the Timeline will be attached
+  var containertl = document.getElementById('vis-tl');
+
+  // Create a DataSet (allows two way data-binding)
+  var itemstl = new vis.DataSet( events );
+
+  // Configuration for the Timeline
+  var optionstl = {
+      height: '100%',
+      start: '2004',
+      end: '2014'
+  };
+
+  // Create a Timeline
+  var timelinetl = new vis.Timeline(containertl, itemstl, optionstl);
+  timelinetl.on( 'rangechange', function(c) {
+    optionstl.start = c.start;
+    optionstl.end = c.end;
+    Graph2d.setOptions( optionstl );
+  });
+
+  var datasets;
+  $('#dataset').change( function() {
+    loadDataset($( "#dataset option:selected" ).val());
+  });
+  loadDataset('aidflows');
+  function loadDataset(id)
+  {
+    url = 'data/'+id+'.json';
+    $('#dataset-controls').html( "Loading..." );
+    $.ajax( url ).success( loadedDataset );
+  }
+  function loadedDataset(ajax) {
+    datasets = ajax;
+    var list = [];
+    for (var key in ajax) {
+      if (ajax.hasOwnProperty(key)) {
+        list.push( "<option value='"+ajax[key].ID+"'>"+ajax[key].Name+"</option>" );
+      }
+    }
+    $('#dataset-controls').html( "<select>"+list.join("")+"</select>" );
+    $('#dataset-controls select').change( function() {
+      setGraph( $( "#dataset-controls option:selected" ).val() );
+    });
+  } 
+  function setGraph( id)
+  { 
+    data = datasets[id];
+    alert(JSON.stringify(data));
+  }
+ 
+
+</script>
+
+
+
+</body>
+</html>

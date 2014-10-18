@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+$rows = file( $argv[1] );
+
+foreach( $rows as $row )
+{	
+	$row=chop($row);
+	$cells = preg_split( '/\t/', $row );
+	if( !isset($fields ))
+	{
+		$fields=$cells;
+		continue;
+	}
+	$rowData = array();
+	for($i=0;$i<sizeof($fields);++$i)
+	{
+		$rowData[ $fields[$i] ] = $cells[$i];
+	}	
+	$data[ $rowData["ID"] ] = $rowData;
+}
+print json_encode( $data );
