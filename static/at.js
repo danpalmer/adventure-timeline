@@ -268,6 +268,6 @@ function d(x)
 function formatActivity(activity)
 {
 	return "<strong>" + activity.title + "</strong><br>"
-	+ "<p>" + activity.description + "<br>"
+	+ "<p>" + (activity.description ? activity.description : '') + "<br>"
 	+ activity.sector.name + "</p>";
 }
