@@ -3,21 +3,29 @@
 <head>
   <meta charset="utf-8">
   <title>Adventure Timeline</title>
+
+  <link href="static/vis.min.css" rel="stylesheet" type="text/css" />
+  <link href="static/leaflet.css" rel="stylesheet" type="text/css" />
+  <link href="static/at.css" rel="stylesheet" type="text/css" />
+
   <script src="static/jquery.js"></script>
   <script src="static/vis.min.js"></script>
-  <link href="static/vis.min.css" rel="stylesheet" type="text/css" />
-  <link href="static/at.css" rel="stylesheet" type="text/css" />
+  <script src="static/leaflet.js"></script>
+  <script src="static/leaflet.label.js"></script>
+  <script src="static/countries.geo.js"></script>
   <script src="static/at.js"></script>
+
 </head>
 
 <body>
+  <div id="map"></div>
+  <div id="show-map-control">Show<br />Map</div>
   <div id="vis-g"></div>
   <div id="vis-tl"></div>
-  <div id='controls'>
-    <select id='dataset'><option>** select category **</option></select>
-    <div id='dataset-controls'></div>
+  <div id="controls">
+    <select id="dataset"><option>** select category **</option></select>
+    <div id="dataset-controls"></div>
   </div>
-</div>
 
 </body>
 </html>

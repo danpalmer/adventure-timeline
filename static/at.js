@@ -29,7 +29,54 @@ $(document).ready(function(){
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
 	//loadDataset('aidflows');
 	loadTimeline('static/data/example-iati.json');
+	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
+	initMap();
 });
+
+function initMap()
+{
+	var map = L.map('map').setView([-3.51342,29.53125], 5);
+	var tileUrl = 'http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png';
+	L.tileLayer(tileUrl, {
+    		attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    		maxZoom: 19
+	}).addTo(map);
+	L.geoJson(countryGeoJSON, {
+
+		style: function (feature) {
+			return { color: "green", "opacity":0, fillOpacity:0 };
+		},
+
+		onEachFeature: onEachFeature,
+
+	}).addTo(map);
+}
+
+function setCountry( country )
+{
+	window.location.hash=country;
+
+	$('#g_1 option:selected').removeAttr( 'selected' );
+	$('#g_1_'+country ).attr( "selected","selected" );
+	setGraph( country );
+}
+	
+
+function onEachFeature( feature, layer )
+{
+	//layer.bindPopup("ID: "+feature.id+"<br />Name: "+feature.properties.name);
+        layer.on('click', function (e) {
+		setCountry( feature.id );
+		$('#map').css('left','-100%');
+	});
+        layer.on('mouseover', function (e) {
+		this.setStyle( { opacity: 1, fillOpacity: 0.5 } );
+        });
+        layer.on('mouseout', function (e) {
+		this.setStyle( { opacity: 0, fillOpacity: 0} );
+        });
+}
+
 
 var datasetList;
 function loadedList(ajax)
@@ -53,6 +100,7 @@ function loadDataset(id)
 
 function loadedDataset(ajax) 
 {
+	var g = 1;
 	var list = [];
 	var hash="";
 	datasets = {};
@@ -69,9 +117,9 @@ function loadedDataset(ajax)
 			sel = ""; // don't need to make it default to an empty value
 			setGraph( hash );
 		}
-		list.push( "<option "+(ajax[i].ID==hash?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
+		list.push( "<option id='g_1_"+ajax[i].ID+"' "+(ajax[i].ID==hash?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
 	}
-	$('#dataset-controls').html( currentDataset.relation+" <select>"+sel+list.join("")+"</select> in "+currentDataset.units );
+	$('#dataset-controls').html( currentDataset.relation+" <select id='g_1'>"+sel+list.join("")+"</select> in "+currentDataset.units );
 	$('#dataset-controls select').change( function() {
 		setGraph( $( "#dataset-controls option:selected" ).val() );
 	});
@@ -106,9 +154,12 @@ function loadedTimeline( ajax )
 	});
 }
 
+
 function setGraph( id)
 { 
+	if( !datasets ) { return; }
 	var dataset = datasets[id];
+	if( !dataset ) { return; }
 	var data = [];
 	for (var key in dataset) {
 		if ( key.match( /^\d\d\d\d/ ) && dataset[key]!==null && dataset[key]!="")
@@ -128,8 +179,8 @@ function setGraph( id)
 	optionsg.start = timelinetl.getWindow().start;
 	optionsg.end = timelinetl.getWindow().end;
 	Graph2d.setOptions( optionsg );
-	window.location.hash=id;
 }
+
 
 function d(x) 
 { 
