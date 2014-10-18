@@ -24,15 +24,28 @@ var timelinetl;
 var datasets;
 var graphs = [ { id: 0, items: [] }, { id: 1, items: [] } ];
 
+var countryCode = '';
+var sectorCode = '';
+
 $(document).ready(function(){
+
+	parts = window.location.hash.split('&');
+	if (parts.length == 2) {
+		countryCode = parts[0].replace('#', '');
+		sectorCode = parts[1];
+	}
+
 	for(i=0;i<graphs.length;++i)
 	{
 		var g = graphs[i].id;
 		$('#dataset_'+g).change( loadDatasetFromForm.bind(g) );
 	}
+	$('#sectors').change(sectorChanged);
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
+	$.ajax( 'sectors' ).success( loadedSectors ).fail( dang );
 	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
 	initMap();
+	loadTimeline();
 });
 function loadDatasetFromForm()
 {
@@ -60,12 +73,17 @@ function initMap()
 
 function setCountry( country )
 {
-	window.location.hash=country;
-
 	$('#g_1 option:selected').removeAttr( 'selected' );
 	$('#g_1_'+country ).attr( "selected","selected" );
 	setGraph(1, country);
-	loadTimeline('/query?country_code=' + country + '&limit=1000&sector=' + 13040);
+	countryCode = country;
+	loadTimeline();
+}
+
+function sectorChanged()
+{
+	sectorCode = $(this).val();
+	loadTimeline();
 }
 
 function onEachFeature( feature, layer )
@@ -94,6 +112,20 @@ function loadedList(ajax)
 		{
 			$("#dataset_"+graphs[i].id).append(option);
 		}
+	}
+}
+
+function loadedSectors(results)
+{
+	var filters = results.sectors;
+	for (var i = 0; i < filters.length; i++)
+	{
+		var filter = filters[i];
+		var option = "<option value='"+filter[0]+"'>"+filter[1]+"</option>";
+		$("#sectors").append(option);
+	}
+	if (sectorCode != '') {
+		$('#sectors').val(sectorCode);
 	}
 }
 
@@ -134,9 +166,14 @@ function dang()
 	alert( "something didn't work. We're too lazy to write good debug messages." );
 }
 
-function loadTimeline(url)
+function loadTimeline()
 {
-	$.ajax( url ).success( loadedTimeline ).fail( dang );
+	if (countryCode != '' && sectorCode != '') {
+		$.ajax('/query?country_code=' + countryCode + '&sector=' + sectorCode).success( loadedTimeline ).fail( dang );
+	}
+
+	window.location.hash=countryCode + '&' + sectorCode;
+	$('#sectors').val(sectorCode);
 }
 
 function loadedTimeline( ajax )
