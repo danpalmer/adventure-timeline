@@ -76,9 +76,5 @@ def query():
 
     return jsonify(results=activities, length=len(activities))
 
-@app.route('/sectors')
-def sectors():
-    return jsonify(sectors=[(x, y[0]) for x, y in SECTORS.items()])
-
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

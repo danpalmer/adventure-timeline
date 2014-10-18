@@ -42,7 +42,7 @@ $(document).ready(function(){
 	}
 	$('#sectors').change(sectorChanged);
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
-	$.ajax( 'sectors' ).success( loadedSectors ).fail( dang );
+	$.ajax( 'static/data/sectors.json' ).success( loadedSectors ).fail( dang );
 	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
 	initMap();
 	loadTimeline();
