@@ -21,17 +21,23 @@ var optionstl = {
 };
 var timelinetl;
 var datasets;
+var graphs = [ { id: 0, items: [] }, { id: 1, items: [] } ];
 
 $(document).ready(function(){
-	$('#dataset').change( function() {
-		loadDataset($( "#dataset option:selected" ).val());
-	});
+	for(i=0;i<graphs.length;++i)
+	{
+		var g = graphs[i].id;
+		$('#dataset_'+g).change( loadDatasetFromForm.bind(g) );
+	}
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
-	//loadDataset('aidflows');
 	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
 	initMap();
 	loadTimeline('/query?country_code=AFG&limit=1000');
 });
+function loadDatasetFromForm()
+{
+	loadDataset(this,$( "#dataset_"+this+" option:selected" ).val());
+}
 
 function initMap()
 {
@@ -58,13 +64,12 @@ function setCountry( country )
 
 	$('#g_1 option:selected').removeAttr( 'selected' );
 	$('#g_1_'+country ).attr( "selected","selected" );
-	setGraph( country );
+	setGraph(1, country );
 }
 	
 
 function onEachFeature( feature, layer )
 {
-	//layer.bindPopup("ID: "+feature.id+"<br />Name: "+feature.properties.name);
         layer.on('click', function (e) {
 		setCountry( feature.id );
 		$('#map').css('left','-100%');
@@ -85,29 +90,28 @@ function loadedList(ajax)
 	for (var key in ajax)
 	{
 		var option = "<option value='"+key+"'>"+ajax[key].name+"</option>";
-		$("#dataset").append(option);
+		for(i=0;i<graphs.length;++i)
+		{
+			$("#dataset_"+graphs[i].id).append(option);
+		}
 	}
 }
 
 var currentDataset;
-function loadDataset(id)
+function loadDataset(g,id)
 {
-	url = 'static/data/'+id+'.json';
+	var url = 'static/data/'+id+'.json';
 	currentDataset = datasetList[id];
 	$('#dataset-controls').html( "Loading..." );
-	$.ajax( url ).success( loadedDataset ).fail( dang );
+	$.ajax( url ).success( loadedDataset.bind(g) ).fail( dang );
 }
 
 function loadedDataset(ajax)
 {
-	var g = 1;
+	var g=this;
 	var list = [];
 	var hash="";
 	datasets = {};
-	if( window.location.hash )
-	{
-		hash = window.location.hash.replace(/^#/,'');
-	}
 	var sel = "<option>** select dataset **</option>";
 	for (var i=0;i<ajax.length;++i )
 	{
@@ -115,13 +119,13 @@ function loadedDataset(ajax)
 		if(ajax[i].ID==hash)
 		{
 			sel = ""; // don't need to make it default to an empty value
-			setGraph( hash );
+			setGraph(g, hash );
 		}
-		list.push( "<option id='g_1_"+ajax[i].ID+"' "+(ajax[i].ID==hash?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
+		list.push( "<option id='g_"+g+"_"+ajax[i].ID+"' "+(ajax[i].ID==hash?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
 	}
-	$('#dataset-controls').html( currentDataset.relation+" <select id='g_1'>"+sel+list.join("")+"</select> in "+currentDataset.units );
-	$('#dataset-controls select').change( function() {
-		setGraph( $( "#dataset-controls option:selected" ).val() );
+	$('#dataset_'+g+'-controls').html( currentDataset.relation+" <select id='select_"+g+"'>"+sel+list.join("")+"</select> in "+currentDataset.units );
+	$('#select_'+g).change( function() {
+		setGraph( g,$( "#select_"+g+" option:selected" ).val() );
 	});
 }
 
@@ -154,8 +158,8 @@ function loadedTimeline( ajax )
 	}
 }
 
-
-function setGraph( id)
+var groups;
+function setGraph(g, id)
 { 
 	if( !datasets ) { return; }
 	var dataset = datasets[id];
@@ -164,15 +168,45 @@ function setGraph( id)
 	for (var key in dataset) {
 		if ( key.match( /^\d\d\d\d/ ) && dataset[key]!==null && dataset[key]!="")
 		{
-			data.push( {"x":key, "y":parseInt(dataset[key])/currentDataset.modifier } );
+			data.push( {"group":g,"x":key, "y":parseInt(dataset[key])/currentDataset.modifier } );
 		}
 	}
-	if( !Graph2d )
+	graphs[g].items = data;
+
+	if( Graph2d )
 	{
-		var containerg = document.getElementById('vis-g');
-		Graph2d = new vis.Graph2d(containerg, data, optionsg);
+		Graph2d.destroy();
 	}
-	Graph2d.setItems( data );
+	var containerg = document.getElementById('vis-g');
+ 	groups = new vis.DataSet();
+	for(i=0;i<graphs.length;++i)
+	{
+		var g1 = graphs[i].id;
+		if( graphs[g1].items.length > 0 )
+		{
+			var group = {
+        			id: g1,
+        			content: "g1"+g,
+        			options: {  drawPoints: false }
+			};
+			if( g1%2==1 )
+			{
+				group.options.yAxisOrientation= 'right';
+			}
+    			groups.add(group);
+		}
+	}
+	var items = [];
+	for(i=0;i<graphs.length;++i)
+	{
+		for(j=0;j<graphs[i].items.length;j++)
+		{
+			row = graphs[i].items[j];
+			items.push( row );
+		}
+	}
+	Graph2d = new vis.Graph2d(containerg, items, optionsg, groups);
+
 	if( timelinetl )
 	{
 		var axis_width = $('#vis-g .dataaxis').width()+1;
