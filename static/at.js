@@ -35,7 +35,7 @@ var datasetList;
 function loadedList(ajax)
 {
 	datasetList = ajax;
-	for (var key in ajax) 
+	for (var key in ajax)
 	{
 		var option = "<option value='"+key+"'>"+ajax[key].name+"</option>";
 		$("#dataset").append(option);
@@ -51,7 +51,7 @@ function loadDataset(id)
 	$.ajax( url ).success( loadedDataset ).fail( dang );
 }
 
-function loadedDataset(ajax) 
+function loadedDataset(ajax)
 {
 	var list = [];
 	var hash="";
@@ -75,7 +75,7 @@ function loadedDataset(ajax)
 	$('#dataset-controls select').change( function() {
 		setGraph( $( "#dataset-controls option:selected" ).val() );
 	});
-}	
+}
 
 function dang()
 {
@@ -89,10 +89,10 @@ function loadTimeline(url)
 
 function loadedTimeline( ajax )
 {
-	if( !timelinetl ) 
-	{ 
+	if( !timelinetl )
+	{
 		var containertl = document.getElementById('vis-tl');
-		timelinetl = new vis.Timeline(containertl, ajax, optionstl); 
+		timelinetl = new vis.Timeline(containertl, ajax, optionstl);
 	}
 	else
 	{
@@ -107,7 +107,7 @@ function loadedTimeline( ajax )
 }
 
 function setGraph( id)
-{ 
+{
 	var dataset = datasets[id];
 	var data = [];
 	for (var key in dataset) {
@@ -116,10 +116,10 @@ function setGraph( id)
 			data.push( {"x":key, "y":parseInt(dataset[key])/currentDataset.modifier } );
 		}
 	}
-	if( !Graph2d ) 
-	{ 
+	if( !Graph2d )
+	{
 		var containerg = document.getElementById('vis-g');
-		Graph2d = new vis.Graph2d(containerg, data, optionsg); 
+		Graph2d = new vis.Graph2d(containerg, data, optionsg);
 	}
 	Graph2d.setItems( data );
 	var axis_width = $('#vis-g .dataaxis').width()+1;
@@ -131,8 +131,8 @@ function setGraph( id)
 	window.location.hash=id;
 }
 
-function d(x) 
-{ 
-	alert(JSON.stringify(x)); 
+function d(x)
+{
+	alert(JSON.stringify(x));
 }
 
