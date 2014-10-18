@@ -21,7 +21,6 @@ var optionstl = {
 		template: formatActivity
 };
 var timelinetl;
-var datasets;
 var graphs = [ { id: 0, items: [] }, { id: 1, items: [] } ];
 
 var countryCode = '';
@@ -73,9 +72,12 @@ function initMap()
 
 function setCountry( country )
 {
-	$('#g_1 option:selected').removeAttr( 'selected' );
-	$('#g_1_'+country ).attr( "selected","selected" );
-	setGraph(1, country);
+	for( var g=0;g<graphs.length;++g )
+	{
+		$("#g_"+g+" option:selected").removeAttr( "selected" );
+		$("#g_"+g+"_"+country ).attr( "selected","selected" );
+		setGraph(g, country );
+	}
 	countryCode = country;
 	loadTimeline();
 }
@@ -107,12 +109,16 @@ function loadedList(ajax)
 	datasetList = ajax;
 	for (var key in ajax)
 	{
-		var option = "<option value='"+key+"'>"+ajax[key].name+"</option>";
 		for(i=0;i<graphs.length;++i)
 		{
+			var option = "<option id='ds_"+i+"_"+key+"' value='"+key+"'>"+ajax[key].name+"</option>";
 			$("#dataset_"+graphs[i].id).append(option);
 		}
 	}
+	$("#ds_0_population" ).attr( "selected","selected" );
+	loadDataset(0,'population');
+	$("#ds_1_life_expectancy" ).attr( "selected","selected" );
+	loadDataset(1,'life_expectancy');
 }
 
 function loadedSectors(results)
@@ -129,11 +135,10 @@ function loadedSectors(results)
 	}
 }
 
-var currentDataset;
 function loadDataset(g,id)
 {
 	var url = 'static/data/'+id+'.json';
-	currentDataset = datasetList[id];
+	graphs[g].dataset = datasetList[id];
 	$('#dataset-controls').html( "Loading..." );
 	$.ajax( url ).success( loadedDataset.bind(g) ).fail( dang );
 }
@@ -142,20 +147,19 @@ function loadedDataset(ajax)
 {
 	var g=this;
 	var list = [];
-	var hash="";
-	datasets = {};
+	graphs[g].datasets = {};
 	var sel = "<option>** select dataset **</option>";
 	for (var i=0;i<ajax.length;++i )
 	{
-		datasets[ajax[i].ID] = ajax[i];
-		if(ajax[i].ID==hash)
+		graphs[g].datasets[ajax[i].ID] = ajax[i];
+		if(ajax[i].ID==countryCode)
 		{
 			sel = ""; // don't need to make it default to an empty value
-			setGraph(g, hash );
+			setGraph(g, countryCode );
 		}
-		list.push( "<option id='g_"+g+"_"+ajax[i].ID+"' "+(ajax[i].ID==hash?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
+		list.push( "<option id='g_"+g+"_"+ajax[i].ID+"' "+(ajax[i].ID==countryCode?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
 	}
-	$('#dataset_'+g+'-controls').html( currentDataset.relation+" <select id='select_"+g+"'>"+sel+list.join("")+"</select> in "+currentDataset.units );
+	$('#dataset_'+g+'-controls').html( graphs[g].dataset.relation+" <select id='select_"+g+"'>"+sel+list.join("")+"</select> in "+graphs[g].dataset.units );
 	$('#select_'+g).change( function() {
 		setGraph( g,$( "#select_"+g+" option:selected" ).val() );
 	});
@@ -197,15 +201,16 @@ function loadedTimeline( ajax )
 
 var groups;
 function setGraph(g, id)
-{
-	if( !datasets ) { return; }
-	var dataset = datasets[id];
+{ 
+	if( !graphs[g].datasets ) { return; }
+	var dataset = graphs[g].datasets[id];
 	if( !dataset ) { return; }
 	var data = [];
+
 	for (var key in dataset) {
 		if ( key.match( /^\d\d\d\d/ ) && dataset[key]!==null && dataset[key]!="")
 		{
-			data.push( {"group":g,"x":key, "y":parseInt(dataset[key])/currentDataset.modifier } );
+			data.push( {"group":g,"x":key, "y":parseInt(dataset[key])/graphs[g].dataset.modifier } );
 		}
 	}
 	graphs[g].items = data;
