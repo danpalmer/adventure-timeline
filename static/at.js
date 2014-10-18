@@ -33,7 +33,6 @@ $(document).ready(function(){
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
 	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
 	initMap();
-	loadTimeline('/query?country_code=AFG&limit=1000');
 });
 function loadDatasetFromForm()
 {
@@ -65,7 +64,8 @@ function setCountry( country )
 
 	$('#g_1 option:selected').removeAttr( 'selected' );
 	$('#g_1_'+country ).attr( "selected","selected" );
-	setGraph(1, country );
+	setGraph(1, country);
+	loadTimeline('/query?country_code=' + country + '&limit=1000');
 }
 
 function onEachFeature( feature, layer )
@@ -154,7 +154,7 @@ function loadedTimeline( ajax )
 	}
 	else
 	{
-		timelinetl.setItems( ajax );
+		timelinetl.setItems( ajax.results );
 	}
 }
 
