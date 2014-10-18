@@ -1,6 +1,26 @@
 {
-	"aidflows": "Aid Flows",
-	"population": "Populations",
-	"total_gdp_usd": "Total GDP in US$",
-	"gdp_growth_percentage": "GDP Growth Percentage"
+	"aidflows": { 
+		"name": "Aid Flow",
+		"relation": "to",
+		"units": "Millions of US$",
+		"modifier": 1
+	},
+	"population": {
+		"name": "Population",
+		"relation": "of",
+		"units": "Millions of People",
+		"modifier": 1000000
+	},
+	"total_gdp_usd": {
+		"name": "Total GDP",
+		"relation": "of",
+		"units": "Billions of US$",
+		"modifier": 1000000000
+	},
+	"gdp_growth_percentage": {
+		"name":"GDP Growth (%)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	}
 }

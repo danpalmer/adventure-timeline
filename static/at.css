@@ -1,7 +1,13 @@
 body, html {
 	font-family: sans-serif;
 }
+#dataset-controls {
+	display: inline-block;
+}
 #controls {
+	border: solid 1px #ccc;
+	background-color: #fff;
+	padding: 4px;
 	position: absolute;
 	z-index: 5;
 }

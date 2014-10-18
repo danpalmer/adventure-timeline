@@ -31,18 +31,22 @@ $(document).ready(function(){
 	loadTimeline('static/data/example-iati.json');
 });
 
+var datasetList;
 function loadedList(ajax)
 {
+	datasetList = ajax;
 	for (var key in ajax) 
 	{
-		var option = "<option value='"+key+"'>"+ajax[key]+"</option>";
+		var option = "<option value='"+key+"'>"+ajax[key].name+"</option>";
 		$("#dataset").append(option);
 	}
 }
 
+var currentDataset;
 function loadDataset(id)
 {
 	url = 'static/data/'+id+'.json';
+	currentDataset = datasetList[id];
 	$('#dataset-controls').html( "Loading..." );
 	$.ajax( url ).success( loadedDataset ).fail( dang );
 }
@@ -50,13 +54,24 @@ function loadDataset(id)
 function loadedDataset(ajax) 
 {
 	var list = [];
+	var hash="";
 	datasets = {};
+	if( window.location.hash )
+	{
+		hash = window.location.hash.replace(/^#/,'');
+	}
+	var sel = "<option>** select dataset **</option>";
 	for (var i=0;i<ajax.length;++i )
 	{
 		datasets[ajax[i].ID] = ajax[i];
-		list.push( "<option value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
+		if(ajax[i].ID==hash)
+		{
+			sel = ""; // don't need to make it default to an empty value
+			setGraph( hash );
+		}
+		list.push( "<option "+(ajax[i].ID==hash?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
 	}
-	$('#dataset-controls').html( "<select><option>** select dataset **</option>"+list.join("")+"</select>" );
+	$('#dataset-controls').html( currentDataset.relation+" <select>"+sel+list.join("")+"</select> in "+currentDataset.units );
 	$('#dataset-controls select').change( function() {
 		setGraph( $( "#dataset-controls option:selected" ).val() );
 	});
@@ -98,7 +113,7 @@ function setGraph( id)
 	for (var key in dataset) {
 		if ( key.match( /^\d\d\d\d/ ) && dataset[key]!==null && dataset[key]!="")
 		{
-			data.push( {"x":key, "y":parseInt(dataset[key]) } );
+			data.push( {"x":key, "y":parseInt(dataset[key])/currentDataset.modifier } );
 		}
 	}
 	if( !Graph2d ) 
@@ -113,6 +128,7 @@ function setGraph( id)
 	optionsg.start = timelinetl.getWindow().start;
 	optionsg.end = timelinetl.getWindow().end;
 	Graph2d.setOptions( optionsg );
+	window.location.hash=id;
 }
 
 function d(x) 
