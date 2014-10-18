@@ -44,12 +44,14 @@ def query():
     for activity in qs:
         activities.append({
             'id': activity.id,
-            'content': activity.title,
+            'title': activity.title,
             'description': activity.description,
+            'status': activity.status,
             'start': activity.get_start(),
             'end': activity.get_end(),
             'uri': activity.activity_website,
             'country_code': activity.recipient_country_code,
+            'iati_id': activity.iati_identifier,
         })
 
     activities = [

@@ -17,7 +17,8 @@ var events = [ ];
 var optionstl = {
 		height: '99%',
 		start: '2004',
-		end: '2014'
+		end: '2014',
+		template: formatActivity
 };
 var timelinetl;
 var datasets;
@@ -223,3 +224,9 @@ function d(x)
 	alert(JSON.stringify(x));
 }
 
+function formatActivity(activity)
+{
+	return "<strong>" + activity.title + "</strong><br>"
+	+ "<p>" + activity.description + "<br>"
+	+ "Stage: <em>" + activity.status + "</em></p>";
+}
