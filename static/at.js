@@ -17,21 +17,34 @@ var events = [ ];
 var optionstl = {
 		height: '99%',
 		start: '2004',
-		end: '2014'
+		end: '2014',
+		template: formatActivity
 };
 var timelinetl;
 var graphs = [ { id: 0, items: [] }, { id: 1, items: [] } ];
 
+var countryCode = '';
+var sectorCode = '';
+
 $(document).ready(function(){
+
+	parts = window.location.hash.split('&');
+	if (parts.length == 2) {
+		countryCode = parts[0].replace('#', '');
+		sectorCode = parts[1];
+	}
+
 	for(i=0;i<graphs.length;++i)
 	{
 		var g = graphs[i].id;
 		$('#dataset_'+g).change( loadDatasetFromForm.bind(g) );
 	}
+	$('#sectors').change(sectorChanged);
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
+	$.ajax( 'sectors' ).success( loadedSectors ).fail( dang );
 	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
 	initMap();
-	loadTimeline('/query?country_code=AFG&limit=1000');
+	loadTimeline();
 });
 function loadDatasetFromForm()
 {
@@ -59,15 +72,21 @@ function initMap()
 
 function setCountry( country )
 {
-	window.location.hash=country;
 	for( var g=0;g<graphs.length;++g )
 	{
 		$("#g_"+g+" option:selected").removeAttr( "selected" );
 		$("#g_"+g+"_"+country ).attr( "selected","selected" );
 		setGraph(g, country );
 	}
+	countryCode = country;
+	loadTimeline();
 }
-	
+
+function sectorChanged()
+{
+	sectorCode = $(this).val();
+	loadTimeline();
+}
 
 function onEachFeature( feature, layer )
 {
@@ -100,7 +119,20 @@ function loadedList(ajax)
 	loadDataset(0,'population');
 	$("#ds_1_life_expectancy" ).attr( "selected","selected" );
 	loadDataset(1,'life_expectancy');
-	//setGraph(g, country );
+}
+
+function loadedSectors(results)
+{
+	var filters = results.sectors;
+	for (var i = 0; i < filters.length; i++)
+	{
+		var filter = filters[i];
+		var option = "<option value='"+filter[0]+"'>"+filter[1]+"</option>";
+		$("#sectors").append(option);
+	}
+	if (sectorCode != '') {
+		$('#sectors').val(sectorCode);
+	}
 }
 
 function loadDataset(g,id)
@@ -115,18 +147,17 @@ function loadedDataset(ajax)
 {
 	var g=this;
 	var list = [];
-	var hash= window.location.hash.replace( /^#/, "");
 	graphs[g].datasets = {};
 	var sel = "<option>** select dataset **</option>";
 	for (var i=0;i<ajax.length;++i )
 	{
 		graphs[g].datasets[ajax[i].ID] = ajax[i];
-		if(ajax[i].ID==hash)
+		if(ajax[i].ID==countryCode)
 		{
 			sel = ""; // don't need to make it default to an empty value
-			setGraph(g, hash );
+			setGraph(g, countryCode );
 		}
-		list.push( "<option id='g_"+g+"_"+ajax[i].ID+"' "+(ajax[i].ID==hash?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
+		list.push( "<option id='g_"+g+"_"+ajax[i].ID+"' "+(ajax[i].ID==countryCode?"selected='selected'":"")+" value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
 	}
 	$('#dataset_'+g+'-controls').html( graphs[g].dataset.relation+" <select id='select_"+g+"'>"+sel+list.join("")+"</select> in "+graphs[g].dataset.units );
 	$('#select_'+g).change( function() {
@@ -139,9 +170,14 @@ function dang()
 	alert( "something didn't work. We're too lazy to write good debug messages." );
 }
 
-function loadTimeline(url)
+function loadTimeline()
 {
-	$.ajax( url ).success( loadedTimeline ).fail( dang );
+	if (countryCode != '' && sectorCode != '') {
+		$.ajax('/query?country_code=' + countryCode + '&sector=' + sectorCode).success( loadedTimeline ).fail( dang );
+	}
+
+	window.location.hash=countryCode + '&' + sectorCode;
+	$('#sectors').val(sectorCode);
 }
 
 function loadedTimeline( ajax )
@@ -159,7 +195,7 @@ function loadedTimeline( ajax )
 	}
 	else
 	{
-		timelinetl.setItems( ajax );
+		timelinetl.setItems( ajax.results );
 	}
 }
 
@@ -224,8 +260,14 @@ function setGraph(g, id)
 	Graph2d.setOptions( optionsg );
 }
 
-function d(x) 
-{ 
+function d(x)
+{
 	alert(JSON.stringify(x));
 }
 
+function formatActivity(activity)
+{
+	return "<strong>" + activity.title + "</strong><br>"
+	+ "<p>" + activity.description + "<br>"
+	+ activity.sector.name + "</p>";
+}

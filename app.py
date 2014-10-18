@@ -7,6 +7,7 @@ from flask.ext.admin.contrib.peewee import ModelView
 
 from lib.model import db, Activity, Transaction, Sector, RelatedActivity, \
     Country
+from lib.sectors import get_sector, SECTORS
 
 app = Flask(__name__)
 
@@ -30,37 +31,54 @@ def static_proxy(path):
 
 @app.route('/query')
 def query():
-    code = request.args.get('country_code')
-    if not code:
+    country_code = request.args.get('country_code')
+    if not country_code:
         abort(404)
 
-    country = Country.get(Country.three_char_iso_code==code)
+    country = Country.get(Country.three_char_iso_code==country_code)
 
-    qs = Activity.select().where(
+    qs = Activity.select(Activity, Sector).join(
+        Sector,
+        on=(Activity.iati_identifier==Sector.activity_iati_identifier),
+    ).where(
         Activity.recipient_country_code==country.two_char_iso_code,
-    )
+    ).naive()
 
-    activities = []
+    sector_code = request.args.get('sector')
+    if sector_code:
+        qs = qs.where(Sector.code==sector_code)
+
+    activities = {}
     for activity in qs:
-        activities.append({
+        if not activity.code:
+            continue
+        try:
+            sector_name, sector_description = get_sector(activity.code)
+        except KeyError:
+            continue
+        activities[activity.iati_identifier] = {
             'id': activity.id,
-            'content': activity.title,
+            'title': activity.title,
             'description': activity.description,
+            'status': activity.status,
+            'sector': {
+                'name': sector_name,
+                'description': sector_description,
+            },
             'start': activity.get_start(),
             'end': activity.get_end(),
             'uri': activity.activity_website,
             'country_code': activity.recipient_country_code,
-        })
+            'iati_id': activity.iati_identifier,
+        }
 
-    activities = [
-        x for x in activities if all(x[y] for y in x.keys())
-    ]
-
-    limit = request.args.get('limit')
-    if limit:
-        activities = activities[:int(limit)]
+    activities = list(activities.values())
 
     return jsonify(results=activities, length=len(activities))
+
+@app.route('/sectors')
+def sectors():
+    return jsonify(sectors=[(x, y[0]) for x, y in SECTORS.items()])
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
