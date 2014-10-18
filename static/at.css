@@ -1,0 +1,39 @@
+body, html {
+	font-family: sans-serif;
+}
+#controls {
+	position: absolute;
+	z-index: 5;
+}
+#vis-tl {
+	position: absolute;
+	width:99%;
+	height: 99%;
+	z-index: 2;
+
+	/* covering all the bases opacity */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+	filter: alpha(opacity=80);
+	-moz-opacity:0.8;
+	-khtml-opacity: 0.8;
+	opacity: 0.8;
+}
+
+#vis-g {
+	position: absolute;
+	width:99%;
+	height: 99%;
+	z-index: 1;
+}
+.fill {
+	fill: green !important;
+	stroke-width: 4px !important;
+	stroke: green !important;
+}
+.point {
+	stroke: green !important;
+}
+.vis.timeline .item {
+	background-color: #dddddd;
+	border-color: #999999;
+}
