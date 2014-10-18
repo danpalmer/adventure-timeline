@@ -36,22 +36,9 @@ def query():
 
     country = Country.get(Country.three_char_iso_code==code)
 
-    qs = Activity.select().where(~(
-        (   Activity.date_end_actual >> None
-            | Activity.date_end_planned >> None
-        ) &
-        (   Activity.date_start_actual >> None
-            | Activity.date_start_planned >> None
-        ) &
-        Activity.recipient_country_code >> None &
-        Activity.recipient_region_code >> None
-    ))
-
-    qs = qs.where(Activity.recipient_country_code==country.two_char_iso_code)
-
-    limit = request.args.get('limit')
-    if limit:
-        qs = qs.limit(limit)
+    qs = Activity.select().where(
+        Activity.recipient_country_code==country.two_char_iso_code,
+    )
 
     activities = []
     for activity in qs:
@@ -64,6 +51,14 @@ def query():
             'uri': activity.activity_website,
             'country_code': activity.recipient_country_code,
         })
+
+    activities = [
+        x for x in activities if all(x[y] for y in x.keys())
+    ]
+
+    limit = request.args.get('limit')
+    if limit:
+        activities = activities[:int(limit)]
 
     return jsonify(results=activities, length=len(activities))
 
