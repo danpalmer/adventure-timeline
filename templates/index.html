@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8">
+
   <title>Adventure Timeline</title>
-  <script src="resources/jquery.js"></script>
-  <script src="resources/vis.js"></script>
-  <link href="resources/vis.css" rel="stylesheet" type="text/css" />
+  <script src="static/jquery.js"></script>
+  <script src="static/vis.min.js"></script>
+  <link href="static/vis.min.css" rel="stylesheet" type="text/css" />
 
 
   <style type="text/css">
@@ -17,8 +19,8 @@
 }
 #vis-tl {
 	position: absolute;
-	width:100%;
-	height: 100%;
+	width:99%;
+	height: 99%;
 	z-index: 2;
 
 	/* covering all the bases opacity */
@@ -31,8 +33,8 @@
 
 #vis-g {
   position: absolute;
-  width:100%;
-  height: 100%;
+  width:99%;
+  height: 99%;
   z-index: 1;
 }
 .fill {
@@ -58,44 +60,35 @@
   <div id='controls'>
   <select id='dataset'>
     <option value='aidflows'>Aid Flows</option>
-    <option value='foo'>foo</option>
+    <option value='population'>Populations</option>
+    <option value='total_gdp_usd'>Total GDP in US$</option>
+    <option value='gdp_growth_percentage'>GDP Growth Percentage</option>
   </select>
   <div id='dataset-controls'></div>
   </div>
 </div>
 
 <script type="text/javascript">
-
+  var Graph2d;
   var containerg = document.getElementById('vis-g');
-  var itemsg = [
-      {x: '2010', y: 10},
-      {x: '2011', y: 25},
-      {x: '2012', y: 30},
-      {x: '2013', y: 10},
-      {x: '2014', y: 15}
-  ];
 
-  var datasetg = new vis.DataSet(itemsg);
   var optionsg = {
       shaded: true,
-      height: '100%',
+      height: '99%',
       start: '2004',
       end: '2014'
 };
-  var Graph2d = new vis.Graph2d(containerg, datasetg, optionsg);
-  var axis_width = $('#vis-g .dataaxis').width()+1;
-  $('#vis-tl').css( 'margin-left', axis_width+"px" );
-  $('#vis-tl').css( 'width', $('#vis-g').width()-axis_width+"px" );
 
   // DOM element where the Timeline will be attached
   var containertl = document.getElementById('vis-tl');
 
+  var events = [ { "start":new Date(2010,1,1),"end":new Date(2014,1,1),"content":"Stuff" } ];
   // Create a DataSet (allows two way data-binding)
   var itemstl = new vis.DataSet( events );
 
   // Configuration for the Timeline
   var optionstl = {
-      height: '100%',
+      height: '99%',
       start: '2004',
       end: '2014'
   };
@@ -103,9 +96,10 @@
   // Create a Timeline
   var timelinetl = new vis.Timeline(containertl, itemstl, optionstl);
   timelinetl.on( 'rangechange', function(c) {
-    optionstl.start = c.start;
-    optionstl.end = c.end;
-    Graph2d.setOptions( optionstl );
+    if( Graph2d == null) { return; }
+    optionsg.start = c.start;
+    optionsg.end = c.end;
+    Graph2d.setOptions( optionsg );
   });
 
   var datasets;
@@ -113,30 +107,59 @@
     loadDataset($( "#dataset option:selected" ).val());
   });
   loadDataset('aidflows');
+  loadTimeline('static/data/example-iati.json');
+
   function loadDataset(id)
   {
-    url = 'data/'+id+'.json';
+    url = 'static/data/'+id+'.json';
     $('#dataset-controls').html( "Loading..." );
-    $.ajax( url ).success( loadedDataset );
+    $.ajax( url ).success( loadedDataset ).fail( dang );
   }
   function loadedDataset(ajax) {
-    datasets = ajax;
     var list = [];
-    for (var key in ajax) {
-      if (ajax.hasOwnProperty(key)) {
-        list.push( "<option value='"+ajax[key].ID+"'>"+ajax[key].Name+"</option>" );
-      }
+    datasets = {};
+    for (var i=0;i<ajax.length;++i )
+    {
+      datasets[ajax[i].ID] = ajax[i];
+      list.push( "<option value='"+ajax[i].ID+"'>"+ajax[i].Name+"</option>" );
     }
-    $('#dataset-controls').html( "<select>"+list.join("")+"</select>" );
+    $('#dataset-controls').html( "<select><option>** select dataset **</option>"+list.join("")+"</select>" );
     $('#dataset-controls select').change( function() {
       setGraph( $( "#dataset-controls option:selected" ).val() );
     });
-  } 
+  }  
+  function dang()
+  {
+    alert( "something didn't work. We're too lazy to write good debug messages." );
+  }
+  function loadTimeline(url)
+  {
+    $.ajax( url ).success( loadedTimeline ).fail( dang );
+  }
+  function loadedTimeline( ajax )
+  {
+    timelinetl.setItems( ajax );
+  }
   function setGraph( id)
   { 
-    data = datasets[id];
-    alert(JSON.stringify(data));
+    var dataset = datasets[id];
+    var data = [];
+    for (var key in dataset) {
+      if ( key.match( /^\d\d\d\d/ ) && dataset[key]!==null && dataset[key]!="")
+      {
+        data.push( {"x":key, "y":parseInt(dataset[key]) } );
+      }
+    }
+    if( !Graph2d ) { Graph2d = new vis.Graph2d(containerg, data, optionsg); }
+    Graph2d.setItems( data );
+    var axis_width = $('#vis-g .dataaxis').width()+1;
+    $('#vis-tl').css( 'margin-left', axis_width+"px" );
+    $('#vis-tl').css( 'width', $('#vis-g').width()-axis_width+"px" );
+    optionsg.start = timelinetl.getWindow().start;
+    optionsg.end = timelinetl.getWindow().end;
+    Graph2d.setOptions( optionsg );
   }
+function d(x) { alert(JSON.stringify(x)); }
  
 
 </script>

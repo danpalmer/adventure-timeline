@@ -17,6 +17,6 @@ foreach( $rows as $row )
 	{
 		$rowData[ $fields[$i] ] = $cells[$i];
 	}	
-	$data[ $rowData["ID"] ] = $rowData;
+	$data[] = $rowData;
 }
 print json_encode( $data );
