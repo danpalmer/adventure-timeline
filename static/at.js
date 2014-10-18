@@ -173,11 +173,14 @@ function setGraph( id)
 		Graph2d = new vis.Graph2d(containerg, data, optionsg);
 	}
 	Graph2d.setItems( data );
-	var axis_width = $('#vis-g .dataaxis').width()+1;
-	$('#vis-tl').css( 'margin-left', axis_width+"px" );
-	$('#vis-tl').css( 'width', $('#vis-g').width()-axis_width+"px" );
-	optionsg.start = timelinetl.getWindow().start;
-	optionsg.end = timelinetl.getWindow().end;
+	if( timelinetl )
+	{
+		var axis_width = $('#vis-g .dataaxis').width()+1;
+		$('#vis-tl').css( 'margin-left', axis_width+"px" );
+		$('#vis-tl').css( 'width', $('#vis-g').width()-axis_width+"px" );
+		optionsg.start = timelinetl.getWindow().start;
+		optionsg.end = timelinetl.getWindow().end;
+	}
 	Graph2d.setOptions( optionsg );
 }
 
