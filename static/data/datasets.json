@@ -28,5 +28,11 @@
 		"relation":"in",
 		"units": "Years",
 		"modifier": 1
+	},
+	"incidence_of_tuberculosis": {
+		"name":"Incidence of tuberculosis",
+		"relation":"in",
+		"units": "100k People",
+		"modifier": 1
 	}
 }
