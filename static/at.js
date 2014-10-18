@@ -67,7 +67,6 @@ function setCountry( country )
 	$('#g_1_'+country ).attr( "selected","selected" );
 	setGraph(1, country );
 }
-	
 
 function onEachFeature( feature, layer )
 {
@@ -161,7 +160,7 @@ function loadedTimeline( ajax )
 
 var groups;
 function setGraph(g, id)
-{ 
+{
 	if( !datasets ) { return; }
 	var dataset = datasets[id];
 	if( !dataset ) { return; }
@@ -219,8 +218,8 @@ function setGraph(g, id)
 	Graph2d.setOptions( optionsg );
 }
 
-function d(x) 
-{ 
+function d(x)
+{
 	alert(JSON.stringify(x));
 }
 
