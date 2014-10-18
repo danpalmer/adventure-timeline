@@ -65,7 +65,7 @@ function setCountry( country )
 	$('#g_1 option:selected').removeAttr( 'selected' );
 	$('#g_1_'+country ).attr( "selected","selected" );
 	setGraph(1, country);
-	loadTimeline('/query?country_code=' + country + '&limit=1000');
+	loadTimeline('/query?country_code=' + country + '&limit=1000&sector=' + 13040);
 }
 
 function onEachFeature( feature, layer )
@@ -227,5 +227,5 @@ function formatActivity(activity)
 {
 	return "<strong>" + activity.title + "</strong><br>"
 	+ "<p>" + activity.description + "<br>"
-	+ "Stage: <em>" + activity.status + "</em></p>";
+	+ activity.sector.name + "</p>";
 }
