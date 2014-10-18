@@ -22,5 +22,11 @@
 		"relation":"of",
 		"units": "Percentage",
 		"modifier": 1
+	},
+	"life_expectancy": {
+		"name":"Average Life Expectancy",
+		"relation":"in",
+		"units": "Years",
+		"modifier": 1
 	}
 }
