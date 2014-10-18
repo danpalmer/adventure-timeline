@@ -28,7 +28,7 @@ $(document).ready(function(){
 	});
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang );
 	//loadDataset('aidflows');
-	loadTimeline('/query?country_code=AFG');
+	loadTimeline('/query?country_code=AFG&limit=1000');
 });
 
 var datasetList;
@@ -92,18 +92,18 @@ function loadedTimeline( ajax )
 	if( !timelinetl )
 	{
 		var containertl = document.getElementById('vis-tl');
-		timelinetl = new vis.Timeline(containertl, ajax, optionstl);
+		timelinetl = new vis.Timeline(containertl, ajax.results, optionstl);
+		timelinetl.on( 'rangechange', function(c) {
+			if( Graph2d == null) { return; }
+			optionsg.start = c.start;
+			optionsg.end = c.end;
+			Graph2d.setOptions( optionsg );
+		});
 	}
 	else
 	{
 		timelinetl.setItems( ajax );
 	}
-	timelinetl.on( 'rangechange', function(c) {
-		if( Graph2d == null) { return; }
-		optionsg.start = c.start;
-		optionsg.end = c.end;
-		Graph2d.setOptions( optionsg );
-	});
 }
 
 function setGraph( id)
