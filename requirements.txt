@@ -1,0 +1,5 @@
+flask
+flask-admin
+peewee
+wtf-peewee
+psycopg2

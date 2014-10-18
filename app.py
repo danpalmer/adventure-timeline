@@ -1,11 +1,12 @@
 import os
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from flask import render_template
 from flask.ext.admin import Admin
 from flask.ext.admin.contrib.peewee import ModelView
 
-from lib.model import Activity, Transaction, Sector, RelatedActivity, db
+from lib.model import db, Activity, Transaction, Sector, RelatedActivity, \
+    Country
 
 app = Flask(__name__)
 
@@ -29,6 +30,12 @@ def static_proxy(path):
 
 @app.route('/query')
 def query():
+    code = request.args.get('country_code')
+    if not code:
+        abort(404)
+
+    country = Country.get(Country.three_char_iso_code==code)
+
     qs = Activity.select().where(~(
         (   Activity.date_end_actual >> None
             | Activity.date_end_planned >> None
@@ -40,9 +47,7 @@ def query():
         Activity.recipient_region_code >> None
     ))
 
-    country_code = request.args.get('country_code')
-    if country_code:
-        qs = qs.where(Activity.recipient_country_code == country_code)
+    qs = qs.where(Activity.recipient_country_code==country.two_char_iso_code)
 
     limit = request.args.get('limit')
     if limit:
@@ -53,6 +58,7 @@ def query():
         activities.append({
             'id': activity.id,
             'content': activity.title,
+            'description': activity.description,
             'start': activity.get_start(),
             'end': activity.get_end(),
             'uri': activity.activity_website,
