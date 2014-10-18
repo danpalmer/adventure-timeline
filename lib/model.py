@@ -58,6 +58,16 @@ class Activity(BaseModel):
         db_table = 'activity'
         # indexes = ('iati_identifier',)
 
+    def get_start(self):
+        if self.date_start_actual:
+            return self.date_start_actual
+        return self.date_start_planned
+
+    def get_end(self):
+        if self.date_end_actual:
+            return self.date_start_actual
+        return self.date_end_planned
+
 class Transaction(BaseModel):
     activity_id = CharField()
     value = FloatField()

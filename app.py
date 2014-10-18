@@ -29,12 +29,20 @@ def static_proxy(path):
 
 @app.route('/query')
 def query():
-    qs = Activity.select().where(
-        (Activity.date_end_actual != None or Activity.date_end_planned != None) and
-        (Activity.date_start_actual != None or Activity.date_start_planned != None) and
-        Activity.recipient_country_code != None and
-        Activity.recipient_region_code != None
-    )
+    qs = Activity.select().where(~(
+        (   Activity.date_end_actual >> None
+            | Activity.date_end_planned >> None
+        ) &
+        (   Activity.date_start_actual >> None
+            | Activity.date_start_planned >> None
+        ) &
+        Activity.recipient_country_code >> None &
+        Activity.recipient_region_code >> None
+    ))
+
+    country_code = request.args.get('country_code')
+    if country_code:
+        qs = qs.where(Activity.recipient_country_code == country_code)
 
     limit = request.args.get('limit')
     if limit:
@@ -43,10 +51,15 @@ def query():
     activities = []
     for activity in qs:
         activities.append({
-            'name': activity.title,
+            'id': activity.id,
+            'content': activity.title,
+            'start': activity.get_start(),
+            'end': activity.get_end(),
+            'uri': activity.activity_website,
+            'country_code': activity.recipient_country_code,
         })
 
-    return jsonify(results=activities)
+    return jsonify(results=activities, length=len(activities))
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')
