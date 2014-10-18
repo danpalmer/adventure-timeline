@@ -56,10 +56,27 @@ body, html {
 	height: 99%;
 	z-index: 1;
 }
-.fill {
+.graphGroup0 {
 	fill: green !important;
-	stroke-width: 4px !important;
+	stroke-width: 2px !important;
 	stroke: green !important;
+}
+.vis .left .minor {
+	color: #696 !important;
+}
+.vis .left .major {
+	color: #090 !important;
+}
+.vis .right .minor {
+	color: #f66 !important;
+}
+.vis .right .major {
+	color: #f00 !important;
+}
+.graphGroup1 {
+	fill: red !important;
+	stroke-width: 2px !important;
+	stroke: red !important;
 }
 .point {
 	stroke: green !important;
