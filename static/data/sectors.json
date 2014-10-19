@@ -1,0 +1,828 @@
+{
+"sectors": [
+[
+"53030",
+"Import support (capital goods)"
+],
+[
+"23020",
+"Power generation/non-renewable sources"
+],
+[
+"15220",
+"Civilian peace-building, conflict prevention and resolution"
+],
+[
+"13030",
+"Family planning"
+],
+[
+"11220",
+"Primary education"
+],
+[
+"32170",
+"Non-ferrous metal industries"
+],
+[
+"15160",
+"Human rights"
+],
+[
+"13040",
+"STD control including HIV/AIDS"
+],
+[
+"33110",
+"Trade policy and administrative management"
+],
+[
+"11230",
+"Basic life skills for youth and adults"
+],
+[
+"23063",
+"Coal-fired power plants"
+],
+[
+"32266",
+"Industrial minerals"
+],
+[
+"21050",
+"Air transport"
+],
+[
+"92020",
+"Support to international NGOs"
+],
+[
+"11120",
+"Education facilities and training"
+],
+[
+"72050",
+"Relief co-ordination; protection and support services"
+],
+[
+"32264",
+"Nonferrous metals"
+],
+[
+"31140",
+"Agricultural water resources"
+],
+[
+"21061",
+"Storage"
+],
+[
+"11320",
+"Secondary education"
+],
+[
+"21081",
+"Education and training in transport and storage"
+],
+[
+"31130",
+"Agricultural land resources"
+],
+[
+"12240",
+"Basic nutrition"
+],
+[
+"15153",
+"Media and free flow of information"
+],
+[
+"24081",
+"Education/training in banking and financial services"
+],
+[
+"15152",
+"Legislatures and political parties"
+],
+[
+"15110",
+"Economic and development policy/planning"
+],
+[
+"14031",
+"Basic drinking water supply"
+],
+[
+"14022",
+"Sanitation - large systems"
+],
+[
+"43040",
+"Rural development"
+],
+[
+"31150",
+"Agricultural inputs"
+],
+[
+"32110",
+"Industrial policy and administrative management"
+],
+[
+"15130",
+"Legal and judicial development"
+],
+[
+"21010",
+"Transport policy and administrative management"
+],
+[
+"14020",
+"Water supply and sanitation - large systems"
+],
+[
+"23070",
+"Biomass"
+],
+[
+"23040",
+"Electrical transmission/ distribution"
+],
+[
+"15150",
+"Democratic participation and civil society"
+],
+[
+"33130",
+"Regional trade agreements (RTAs)"
+],
+[
+"31161",
+"Food crop production"
+],
+[
+"15250",
+"Land mine clearance"
+],
+[
+"31391",
+"Fishery services"
+],
+[
+"14050",
+"Waste management/disposal"
+],
+[
+"32166",
+"Cement/lime/plaster"
+],
+[
+"32262",
+"Oil and gas"
+],
+[
+"16061",
+"Culture and recreation"
+],
+[
+"23010",
+"Energy policy and administrative management"
+],
+[
+"22040",
+"Information and communication technology (ICT)"
+],
+[
+"15113",
+"Anti-corruption organisations and institutions"
+],
+[
+"92010",
+"Support to national NGOs"
+],
+[
+"13020",
+"Reproductive health care"
+],
+[
+"15162",
+"Human rights"
+],
+[
+"41010",
+"Environmental policy and administrative management"
+],
+[
+"99810",
+"Sectors not specified"
+],
+[
+"15111",
+"Public finance management"
+],
+[
+"32220",
+"Mineral prospection and exploration"
+],
+[
+"25020",
+"Privatisation"
+],
+[
+"41081",
+"Environmental education/ training"
+],
+[
+"32140",
+"Cottage industries and handicraft"
+],
+[
+"14010",
+"Water resources policy and administrative management"
+],
+[
+"33120",
+"Trade facilitation"
+],
+[
+"31163",
+"Livestock"
+],
+[
+"12250",
+"Infectious disease control"
+],
+[
+"41050",
+"Flood prevention/control"
+],
+[
+"33140",
+"Multilateral trade negotiations"
+],
+[
+"31191",
+"Agricultural services"
+],
+[
+"11430",
+"Advanced technical and managerial training"
+],
+[
+"23069",
+"Ocean power"
+],
+[
+"32268",
+"Offshore minerals"
+],
+[
+"15261",
+"Child soldiers (Prevention and demobilisation)"
+],
+[
+"31210",
+"Forestry policy and administrative management"
+],
+[
+"11240",
+"Early childhood education"
+],
+[
+"22030",
+"Radio/television/print media"
+],
+[
+"12261",
+"Health education"
+],
+[
+"33150",
+"Trade-related adjustment"
+],
+[
+"60030",
+"Relief of multilateral debt"
+],
+[
+"32162",
+"Forest industries"
+],
+[
+"32161",
+"Agro-industries"
+],
+[
+"15161",
+"Elections"
+],
+[
+"23050",
+"Gas distribution"
+],
+[
+"31195",
+"Livestock/veterinary services"
+],
+[
+"15151",
+"Elections"
+],
+[
+"72040",
+"Emergency food aid"
+],
+[
+"22020",
+"Telecommunications"
+],
+[
+"14032",
+"Basic sanitation"
+],
+[
+"15120",
+"Public sector financial management"
+],
+[
+"31164",
+"Agrarian reform"
+],
+[
+"31162",
+"Industrial crops/export crops"
+],
+[
+"16020",
+"Employment policy and administrative management"
+],
+[
+"52010",
+"Food aid/Food security programmes"
+],
+[
+"15140",
+"Government administration"
+],
+[
+"31281",
+"Forestry education/training"
+],
+[
+"60040",
+"Rescheduling and refinancing"
+],
+[
+"15170",
+"Women's equality organisations and institutions *"
+],
+[
+"32168",
+"Pharmaceutical production"
+],
+[
+"15164",
+"Women's equality organisations and institutions"
+],
+[
+"32265",
+"Precious metals/materials"
+],
+[
+"33210",
+"Tourism policy and administrative management"
+],
+[
+"14015",
+"Water resources protection"
+],
+[
+"22010",
+"Communications policy and administrative management"
+],
+[
+"41020",
+"Biosphere protection"
+],
+[
+"60061",
+"Debt for development swap"
+],
+[
+"43082",
+"Research/scientific institutions"
+],
+[
+"60063",
+"Debt buy-back"
+],
+[
+"23065",
+"Hydro-electric power plants"
+],
+[
+"32169",
+"Basic metal industries"
+],
+[
+"31120",
+"Agricultural development"
+],
+[
+"32182",
+"Technological research and development"
+],
+[
+"93010",
+"Refugees in donor countries"
+],
+[
+"16010",
+"Social/ welfare services"
+],
+[
+"12262",
+"Malaria control"
+],
+[
+"99820",
+"Promotion of development awareness"
+],
+[
+"51010",
+"General budget support"
+],
+[
+"32167",
+"Energy manufacturing"
+],
+[
+"32120",
+"Industrial development"
+],
+[
+"32163",
+"Textiles, leather and substitutes"
+],
+[
+"23082",
+"Energy research"
+],
+[
+"41082",
+"Environmental research"
+],
+[
+"16064",
+"Social mitigation of HIV/AIDS"
+],
+[
+"23030",
+"Power generation/renewable sources"
+],
+[
+"31282",
+"Forestry research"
+],
+[
+"11330",
+"Vocational training"
+],
+[
+"14021",
+"Water supply - large systems"
+],
+[
+"12220",
+"Basic health care"
+],
+[
+"31291",
+"Forestry services"
+],
+[
+"11110",
+"Education policy and administrative management"
+],
+[
+"13081",
+"Personnel development for population and reproductive health"
+],
+[
+"41030",
+"Bio-diversity"
+],
+[
+"72010",
+"Material relief assistance and services"
+],
+[
+"15112",
+"Decentralisation and support to subnational government"
+],
+[
+"43050",
+"Non-agricultural alternative development"
+],
+[
+"23061",
+"Oil-fired power plants"
+],
+[
+"31165",
+"Agricultural alternative development"
+],
+[
+"16050",
+"Multisector aid for basic social services"
+],
+[
+"31320",
+"Fishery development"
+],
+[
+"11182",
+"Educational research"
+],
+[
+"31310",
+"Fishing policy and administrative management"
+],
+[
+"12191",
+"Medical services"
+],
+[
+"15230",
+"Post-conflict peace-building (UN)"
+],
+[
+"13010",
+"Population policy and administrative management"
+],
+[
+"31220",
+"Forestry development"
+],
+[
+"16063",
+"Narcotics control"
+],
+[
+"23067",
+"Solar energy"
+],
+[
+"15210",
+"Security system management and reform"
+],
+[
+"32210",
+"Mineral/mining policy and administrative management"
+],
+[
+"12230",
+"Basic health infrastructure"
+],
+[
+"12182",
+"Medical research"
+],
+[
+"32172",
+"Transport equipment industry"
+],
+[
+"11420",
+"Higher education"
+],
+[
+"12110",
+"Health policy and administrative management"
+],
+[
+"53040",
+"Import support (commodities)"
+],
+[
+"24010",
+"Financial policy and administrative management"
+],
+[
+"23081",
+"Energy education/training"
+],
+[
+"60020",
+"Debt forgiveness"
+],
+[
+"12281",
+"Health personnel development"
+],
+[
+"16062",
+"Statistical capacity building"
+],
+[
+"32165",
+"Fertilizer plants"
+],
+[
+"16040",
+"Low-cost housing"
+],
+[
+"14030",
+"Basic drinking water supply and basic sanitation"
+],
+[
+"31181",
+"Agricultural education/training"
+],
+[
+"41040",
+"Site preservation"
+],
+[
+"21040",
+"Water transport"
+],
+[
+"31194",
+"Agricultural co-operatives"
+],
+[
+"23062",
+"Gas-fired power plants"
+],
+[
+"31193",
+"Agricultural financial services"
+],
+[
+"15163",
+"Free flow of information"
+],
+[
+"23066",
+"Geothermal energy"
+],
+[
+"43030",
+"Urban development and management"
+],
+[
+"32164",
+"Chemicals"
+],
+[
+"91010",
+"Administrative costs"
+],
+[
+"92030",
+"Support to local and regional NGOs"
+],
+[
+"43081",
+"Multisector education/training"
+],
+[
+"14081",
+"Education and training in water supply and sanitation"
+],
+[
+"24020",
+"Monetary institutions"
+],
+[
+"24040",
+"Informal/semi-formal financial intermediaries"
+],
+[
+"43010",
+"Multisector aid"
+],
+[
+"32267",
+"Fertilizer minerals"
+],
+[
+"31381",
+"Fishery education/training"
+],
+[
+"12263",
+"Tuberculosis control"
+],
+[
+"32130",
+"Small and medium-sized enterprises (SME) development"
+],
+[
+"32263",
+"Ferrous metals"
+],
+[
+"32171",
+"Engineering"
+],
+[
+"31110",
+"Agricultural policy and administrative management"
+],
+[
+"25010",
+"Business support services and institutions"
+],
+[
+"15240",
+"Reintegration and SALW control"
+],
+[
+"33181",
+"Trade education/training"
+],
+[
+"31192",
+"Plant and post-harvest protection and pest control"
+],
+[
+"31261",
+"Fuelwood/charcoal"
+],
+[
+"32310",
+"Construction policy and administrative management"
+],
+[
+"14040",
+"River development"
+],
+[
+"24030",
+"Formal sector financial intermediaries"
+],
+[
+"31382",
+"Fishery research"
+],
+[
+"32261",
+"Coal"
+],
+[
+"21020",
+"Road transport"
+],
+[
+"60062",
+"Other debt swap"
+],
+[
+"23064",
+"Nuclear power plants"
+],
+[
+"31182",
+"Agricultural research"
+],
+[
+"60010",
+"Action relating to debt"
+],
+[
+"11130",
+"Teacher training"
+],
+[
+"74010",
+"Disaster prevention and preparedness"
+],
+[
+"73010",
+"Reconstruction relief and rehabilitation"
+],
+[
+"23068",
+"Wind power"
+],
+[
+"21030",
+"Rail transport"
+],
+[
+"12181",
+"Medical education/training"
+],
+[
+"16030",
+"Housing policy and administrative management"
+],
+[
+"31166",
+"Agricultural extension"
+]
+]
+}
