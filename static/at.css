@@ -142,39 +142,39 @@ body, html {
 	z-index: 1;
 }
 .vis .left .minor {
-	color: #696 !important;
+	color: blue !important;
 }
 .vis .left .major {
-	color: #090 !important;
+	color: blue !important;
 }
 .vis .right .minor {
-	color: #f66 !important;
+	color: orange !important;
 }
 .vis .right .major {
-	color: #f00 !important;
+	color: orange !important;
 }
 .ind {
 	width: 1em;
 	height: 1em;
 }
 .ind_0 {
-	background-color: green;
+	background-color: blue;
 }
 .ind_1 {
-	background-color: red;
+	background-color: orange;
 }
 .graphGroup0 {
-	fill: green !important;
+	fill: blue !important;
 	stroke-width: 1px !important;
-	stroke: green !important;
+	stroke: blue !important;
 }
 .graphGroup1 {
-	fill: red !important;
+	fill: orange !important;
 	stroke-width: 1px !important;
-	stroke: red !important;
+	stroke: orange !important;
 }
 .point {
-	stroke: green !important;
+	stroke: black !important;
 }
 .vis.timeline .item {
 	background-color: #dddddd;

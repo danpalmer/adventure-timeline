@@ -109,7 +109,7 @@ function initMap()
 	L.geoJson(countryGeoJSON, {
 
 		style: function (feature) {
-			return { color: "green", "opacity":0, fillOpacity:0 };
+			return { color: "orange", "opacity":0, fillOpacity:0 };
 		},
 
 		onEachFeature: onEachFeature,
