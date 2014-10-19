@@ -273,16 +273,18 @@ function setGraph(g, id)
 			var group = {
         			id: g1,
         			content: graphs[g1].dataset.name+" ("+graphs[g1].dataset.units+")",
-        			options: { drawPoints: false }
+        			options: { drawPoints: {} }
 			};
 			if( g1%2==1 )
 			{
 				group.options.yAxisOrientation= 'right';
 				optionsg.legend.right = { position: "bottom-right" };
+				group.options.drawPoints.style = "square";
 			}
 			else
 			{
 				optionsg.legend.left = { position: "bottom-left" };
+				group.options.drawPoints.style = "circle";
 			}
     			groups.add(group);
 		}
