@@ -53,6 +53,14 @@ $(document).ready(function(){
 function showMap() 
 { 
 	$('#map').css('left','0'); 
+	var mm = $('#map-message');
+	var border_w = 10;
+	mm.css( 'top',($(window).height()/3)+"px" );
+	mm.css( 'left',( ($(window).width()-mm.width())/2 -border_w)+"px" );
+	mm.show();
+	setInterval( function() {
+		mm.fadeOut();
+	}, 3000 );
 } 
 function hideMap() 
 { 

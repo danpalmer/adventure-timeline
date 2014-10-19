@@ -10,6 +10,20 @@ body, html {
 	left: -100%;
 	z-index: 10;
 }
+#map-message {
+	z-index: 15;
+	position: absolute;
+	width: 60%;
+
+	display: none;
+	background-color: rgba(0,0,0,0.3);
+	text-align: center;
+	border-radius: 10px;
+	padding: 10px;
+	
+	font-size: 300%;
+}
+
 #show-map-control {
 	background-image: url(world.png);
 	background-size: contain;
