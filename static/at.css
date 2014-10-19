@@ -180,4 +180,6 @@ body, html {
 	background-color: #dddddd;
 	border-color: #999999;
 }
-
+.hackunamatata {
+	max-width: 80%;
+}
