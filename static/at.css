@@ -59,11 +59,6 @@ body, html {
 	height: 99%;
 	z-index: 1;
 }
-.graphGroup0 {
-	fill: green !important;
-	stroke-width: 2px !important;
-	stroke: green !important;
-}
 .vis .left .minor {
 	color: #696 !important;
 }
@@ -86,9 +81,14 @@ body, html {
 .ind_1 {
 	background-color: red;
 }
+.graphGroup0 {
+	fill: green !important;
+	stroke-width: 1px !important;
+	stroke: green !important;
+}
 .graphGroup1 {
 	fill: red !important;
-	stroke-width: 2px !important;
+	stroke-width: 1px !important;
 	stroke: red !important;
 }
 .point {
