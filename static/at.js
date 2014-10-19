@@ -42,10 +42,22 @@ $(document).ready(function(){
 	$('#sectors').change(sectorChanged);
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang.bind(this, "loading datasets failed") );
 	$.ajax( 'static/data/sectors.json' ).success( loadedSectors ).fail( dang.bind(this, "loading sectors failed") );
-	$('#show-map-control').click( function() { $('#map').css('left','0'); } );
+	$('#show-map-control').click( showMap ); 
 	initMap();
 	loadTimeline();
+	if( !countryCode )
+	{
+		showMap();
+	}
 });
+function showMap() 
+{ 
+	$('#map').css('left','0'); 
+} 
+function hideMap() 
+{ 
+	$('#map').css('left','-100%'); 
+} 
 function loadDatasetFromForm()
 {
 	loadDataset(this,$( "#dataset_"+this+" option:selected" ).val());
@@ -92,7 +104,7 @@ function onEachFeature( feature, layer )
 {
         layer.on('click', function (e) {
 		setCountry( feature.id );
-		$('#map').css('left','-100%');
+		hideMap();
 	});
         layer.on('mouseover', function (e) {
 		this.setStyle( { opacity: 1, fillOpacity: 0.5 } );
@@ -173,7 +185,9 @@ function dang(msg)
 function loadTimeline()
 {
 	if (countryCode != '' && sectorCode != '') {
-		$.ajax('/query?country_code=' + countryCode + '&sector=' + sectorCode).success( loadedTimeline ).fail( dang );
+		var url = '/query?country_code=' + countryCode + '&sector=' + sectorCode;
+//url='static/data/example-iati.json';
+		$.ajax(url).success( loadedTimeline ).fail( dang );
 	}
 
 	window.location.hash=countryCode + '&' + sectorCode;
@@ -192,6 +206,7 @@ function loadedTimeline( ajax )
 			optionsg.end = c.end;
 			Graph2d.setOptions( optionsg );
 		});
+		updateMargins();
 	}
 	else
 	{
@@ -248,15 +263,37 @@ function setGraph(g, id)
 		}
 	}
 	Graph2d = new vis.Graph2d(containerg, items, optionsg, groups);
+	updateMargins();
+}
 
-	if( timelinetl )
-	{
-		var axis_width = $('#vis-g .dataaxis').width()+1;
-		$('#vis-tl').css( 'margin-left', axis_width+"px" );
-		$('#vis-tl').css( 'width', $('#vis-g').width()-axis_width+"px" );
-		optionsg.start = timelinetl.getWindow().start;
-		optionsg.end = timelinetl.getWindow().end;
+function updateMargins()
+{
+	if( !timelinetl || !Graph2d ) { return; }
+	
+	var axis_width_left = $('#vis-g .left ').width();
+	var axis_width_right = $('#vis-g .right ').width();
+	if( axis_width_left === null ) 
+	{	
+		axis_width_left = 0;
 	}
+	else
+	{	
+		axis_width_left += 1; // add border
+	}
+	if( axis_width_right === null ) 
+	{	
+		axis_width_right = 0;
+	}
+	else
+	{	
+		axis_width_right += 1; // add border
+	}
+	
+	$('#vis-tl').css( 'margin-left', axis_width_left+"px" );
+	$('#vis-tl').css( 'margin-right', axis_width_right+"px" );
+	$('#vis-tl').css( 'width', $('#vis-g').width()-axis_width_left-axis_width_right+"px" );
+	optionsg.start = timelinetl.getWindow().start;
+	optionsg.end = timelinetl.getWindow().end;
 	Graph2d.setOptions( optionsg );
 }
 
@@ -270,4 +307,5 @@ function formatActivity(activity)
 	return "<strong>" + activity.title + "</strong><br>"
 	+ "<p>" + (activity.description ? activity.description : '') + "<br>"
 	+ activity.sector.name + "</p>";
+
 }
