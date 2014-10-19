@@ -11,18 +11,21 @@ body, html {
 	z-index: 10;
 }
 #show-map-control {
+	background-image: url(world.png);
+	background-size: contain;
 	position: absolute;
+	background-color: #ccf;
 	top: 0px;
 	left: 0px;
-	width: 40px;
+	width: 34px;
+	height: 34px;
 	border: solid 1px #ccc;
-	background-color: #fff;
 	z-index: 9;
 	padding: 10px;
 	text-align: center;
 }
 #show-map-control:hover {
-	background-color: #ccf;
+	background-color: #99f;
 }
 
 .control div {
@@ -72,6 +75,16 @@ body, html {
 }
 .vis .right .major {
 	color: #f00 !important;
+}
+.ind {
+	width: 1em;
+	height: 1em;
+}
+.ind_0 {
+	background-color: green;
+}
+.ind_1 {
+	background-color: red;
 }
 .graphGroup1 {
 	fill: red !important;
