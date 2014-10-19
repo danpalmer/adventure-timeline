@@ -65,7 +65,7 @@ class Activity(BaseModel):
 
     def get_end(self):
         if self.date_end_actual:
-            return self.date_start_actual
+            return self.date_end_actual
         return self.date_end_planned
 
 class Transaction(BaseModel):
