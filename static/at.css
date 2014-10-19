@@ -74,7 +74,7 @@ body, html {
 	width: 60%;
 	top: -300%;
 
-	background-color: rgba(192,192,192,0.8);
+	background-color: rgba(192,192,192,0.95);
 	border: solid 2px #000;
 	text-align: center;
 	border-radius: 10px;
@@ -89,12 +89,11 @@ body, html {
 	height: 44px;
 }	
 #show-map-control {
-	background-color: #ccf;
 	width: 64px;
 	height: 64px;
 	top: 10px;
 	left: 10px;
-	border: solid 1px #ccc;
+	border: solid 1px #555;
 	padding: 10px;
 	text-align: center;
 	position: absolute;
@@ -112,7 +111,7 @@ body, html {
 	left: 100px;
 }
 #show-map-control:hover {
-	background-color: #99f;
+	background-color: #399cff;
 }
 
 .control {
