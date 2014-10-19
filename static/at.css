@@ -2,6 +2,9 @@ body, html {
 	font-family: sans-serif;
 	margin:0;
 }
+.legend {
+	bottom: 6px !important;
+}
 #controls-show, #controls-hide {
 	background-color: #009;
 	color: #fff;
