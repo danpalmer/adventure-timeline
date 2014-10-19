@@ -34,5 +34,83 @@
 		"relation":"in",
 		"units": "100k People",
 		"modifier": 1
-	}
+	},
+	"IS.ROD.PAVE.ZS": {
+		"name":"Paved Roads (%)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SP.MTR.1519.ZS": {
+		"name":"Teenage mothers (%)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SP.DYN.CONU.ZS": {
+		"name":"Contraceptive prevalence (% of women ages 15-49)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SP.DYN.TFRT.IN": {
+		"name":"Fertility Rate - Number",
+		"relation":"of",
+		"units": "Births per Woman",
+		"modifier": 1
+	},
+	"SH.DYN.AIDS.ZS": {
+		"name":"Prevalence of HIV (%)",
+		"relation":"of",
+		"units": "Percentage of population ages 15-49",
+		"modifier": 1
+	},
+	"SN.ITK.DEFC.ZS": {
+		"name":"Prevalence of undernourishment (%)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SH.STA.ACSN": {
+		"name":"Improved sanitation facilities (%)",
+		"relation":"of",
+		"units": "Percentage of population with access",
+		"modifier": 1
+	},
+	"SH.MMR.RISK.ZS": {
+		"name":"Lifetime risk of maternal death (%)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SG.VAW.REAS.ZS": {
+		"name":"Women who believe a husband is justified in beating his wife (any of five reasons) (%)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SH.STA.MMRT.NE": {
+		"name":"Maternal mortality ratio",
+		"relation":"of",
+		"units": "national estimate, per 100,000 live births",
+		"modifier": 1
+	},
+	"IS.VEH.NVEH.P3": {
+		"name":"Motor vehicles",
+		"relation":"of",
+		"units": "per 1000 people",
+		"modifier": 1
+	},
+	"IT.NET.USER.P2": {
+		"name":"Internet users",
+		"relation":"of",
+		"units": "per 100 people",
+		"modifier": 1
+	},
+	"IT.CEL.SETS.P2": {
+		"name":"Mobile cellular subscriptions",
+		"relation":"of",
+		"units": "per 100 people",
+		"modifier": 1
+	},
 }
