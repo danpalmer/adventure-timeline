@@ -96,7 +96,8 @@ body, html {
 	border: solid 1px #555;
 	padding: 10px;
 	text-align: center;
-	position: absolute;
+	position: absolute;	
+	cursor: pointer;
 }
 #controls-box {
 	border-bottom: solid 1px #009;
