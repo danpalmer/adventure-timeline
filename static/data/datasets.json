@@ -11,6 +11,12 @@
 		"units": "Millions of People",
 		"modifier": 1000000
 	},
+	"SP.POP.GROW": {
+		"name": "Population Growth",
+		"relation": "of",
+		"units": "Percentage",
+		"modifier": 1
+	},
 	"total_gdp_usd": {
 		"name": "Total GDP",
 		"relation": "of",
@@ -111,6 +117,24 @@
 		"name":"Mobile cellular subscriptions",
 		"relation":"of",
 		"units": "per 100 people",
+		"modifier": 1
+	},
+	"SH.IMM.MEAS": {
+		"name":"Measles Immunization (% children aged 12-23 months)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SL.UEM.TOTL.NE.ZS": {
+		"name":"Unemployment (% labour force)",
+		"relation":"of",
+		"units": "Percentage",
+		"modifier": 1
+	},
+	"SH.MLR.TRET.ZS": {
+		"name":"Children with fever receiving antimalarial drugs (% of children under age 5 with fever)",
+		"relation":"of",
+		"units": "Percentage",
 		"modifier": 1
 	}
 }
