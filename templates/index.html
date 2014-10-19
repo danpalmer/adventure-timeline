@@ -7,14 +7,14 @@
   <link href="static/vis.min.css" rel="stylesheet" type="text/css" />
   <link href="static/leaflet.css" rel="stylesheet" type="text/css" />
   <link href="static/at.css" rel="stylesheet" type="text/css" />
-  <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <link href="static/bootstrap.css" rel="stylesheet" type="text/css" />
 
   <script src="static/jquery.js"></script>
   <script src="static/vis.min.js"></script>
   <script src="static/leaflet.js"></script>
   <script src="static/leaflet.label.js"></script>
   <script src="static/countries.geo.js"></script>
-  <script src="http://getbootstrap.com/dist/js/bootstrap.js"></script>
+  <script src="static/bootstrap.js"></script>
   <script src="static/at.js"></script>
 
 </head>
@@ -22,25 +22,29 @@
 <body>
   <div id="map"></div>
   <div id="map-message">Please Select a Country to Study</div>
-  <div id="show-map-control"></div>
   <div id="vis-g"></div>
   <div id="vis-tl"></div>
-  <div id="controls">
-    <div class='control'>
-      <div class='ind_0 ind'></div>
-      <select id="dataset_0"><option>** select category **</option></select>
-      <div id="dataset_0-controls"></div>
+  <div id="controls-box">
+    <div id="show-map-control"><img src='static/world.png' /></div>
+    <div id="controls">
+      <div class='control'>
+        <div class='ind_0 ind'></div>
+        <select id="dataset_0"><option>** select category **</option></select>
+        <div id="dataset_0-controls"></div>
+      </div>
+      <div class='control'>
+        <div class='ind_1 ind'></div>
+        <select id="dataset_1"><option>** select category **</option></select>
+        <div id="dataset_1-controls"></div>
+      </div>
+      <div class='control'>
+        <select id="sectors"><option>** select sector **</option></select>
+        <div id="sector-controls"></div>
+      </div>
     </div>
-    <div class='control'>
-      <div class='ind_1 ind'></div>
-      <select id="dataset_1"><option>** select category **</option></select>
-      <div id="dataset_1-controls"></div>
-    </div>
-    <div class='control'>
-      <select id="sectors"><option>** select sector **</option></select>
-      <div id="sector-controls"></div>
-    </div>
+    <div id='controls-hide'>Hide Controls</div>
   </div>
+  <div id='controls-show'>Show Controls</div>
 
 </body>
 </html>
