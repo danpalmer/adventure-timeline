@@ -84,6 +84,9 @@ body, html {
 	margin:0 0 0.5em 0;
 }
 
+#show-map-control .on {
+	display: none;
+}
 #show-map-control img {
 	width: 44px;
 	height: 44px;
@@ -99,6 +102,15 @@ body, html {
 	position: absolute;	
 	cursor: pointer;
 }
+#show-map-control:hover {
+	background-color: blue;
+}
+#show-map-control:hover .off {
+	display: none;
+}
+#show-map-control:hover .on {
+	display: block;
+}
 #controls-box {
 	border-bottom: solid 1px #009;
 	background-color: #eee;
@@ -110,9 +122,6 @@ body, html {
 #controls {
 	position: absolute;
 	left: 100px;
-}
-#show-map-control:hover {
-	background-color: #399cff;
 }
 
 .control {
