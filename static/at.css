@@ -45,6 +45,44 @@ body, html {
 	
 	font-size: 300%;
 }
+#about-show {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 200%;	
+	cursor: pointer;
+}
+#about-hide {
+	position: absolute;
+	right: 10px;
+	top: 5px;
+	background-color: black;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	padding: 5px;
+}
+#about-hide:hover {
+	background-color: blue;
+}
+#about-show:hover {
+	color: blue;
+}
+#about {
+	z-index: 15;
+	position: absolute;
+	width: 60%;
+	top: -300%;
+
+	background-color: rgba(192,192,192,0.8);
+	border: solid 2px #000;
+	text-align: center;
+	border-radius: 10px;
+	padding: 10px;
+}
+#about h1 {
+	margin:0 0 0.5em 0;
+}
 
 #show-map-control img {
 	width: 44px;

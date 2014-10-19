@@ -48,6 +48,8 @@ $(document).ready(function(){
 	$('#show-map-control').click( showMap ); 
 	$('#controls-hide').click( hideControls );
 	$('#controls-show').click( showControls );
+	$('#about-hide').click( hideAbout );
+	$('#about-show').click( showAbout );
 	initMap();
 	loadTimeline();
 	if( !countryCode )
@@ -55,6 +57,18 @@ $(document).ready(function(){
 		showMap();
 	}
 });
+function hideAbout()
+{
+	$('#about').fadeOut();
+}
+function showAbout()
+{
+	$('#about').css( { 
+		left: ($(window).width()-$('#about').width())/2-10+"px",
+		top: ($(window).height()-$('#about').height())/2-10+"px"
+	} );
+	$('#about').fadeIn();
+}
 function hideControls()
 {
 	$('#controls-box').animate( { top: -$('#controls-box').height()-10+"px" } );
@@ -200,7 +214,7 @@ function loadedDataset(ajax)
 
 function dang(msg)
 {
-	alert( "DEFINITELY NOT AN ERROR.. but..." + msg );
+	//alert( "DEFINITELY NOT AN ERROR.. but..." + msg );
 }
 
 function loadTimeline()
