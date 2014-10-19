@@ -2,6 +2,25 @@ body, html {
 	font-family: sans-serif;
 	margin:0;
 }
+#controls-show, #controls-hide {
+	background-color: #009;
+	color: #fff;
+	cursor: pointer;
+	font-size: 80%;
+	padding: 5px 20px;
+}
+#controls-show {
+	z-index: 5;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+#controls-hide {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
 #map {
 	width: 100%;
 	height: 100%;
@@ -24,34 +43,42 @@ body, html {
 	font-size: 300%;
 }
 
+#show-map-control img {
+	width: 44px;
+	height: 44px;
+}	
 #show-map-control {
-	background-image: url(world.png);
-	background-size: contain;
-	position: absolute;
 	background-color: #ccf;
-	top: 0px;
-	left: 0px;
-	width: 34px;
-	height: 34px;
+	width: 64px;
+	height: 64px;
+	top: 10px;
+	left: 10px;
 	border: solid 1px #ccc;
-	z-index: 9;
 	padding: 10px;
 	text-align: center;
+	position: absolute;
+}
+#controls-box {
+	border-bottom: solid 1px #009;
+	background-color: #eee;
+	padding: 4px;
+	position: relative;
+	z-index: 6;
+	min-height: 7em;
+}
+#controls {
+	position: absolute;
+	left: 100px;
 }
 #show-map-control:hover {
 	background-color: #99f;
 }
 
+.control {
+}
+
 .control div {
 	display: inline-block;
-}
-#controls {
-	border: solid 1px #ccc;
-	background-color: #fff;
-	padding: 4px;
-	position: absolute;
-	left: 60px;
-	z-index: 5;
 }
 #vis-tl {
 	position: absolute;

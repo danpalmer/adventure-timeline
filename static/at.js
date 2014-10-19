@@ -40,10 +40,14 @@ $(document).ready(function(){
 		var g = graphs[i].id;
 		$('#dataset_'+g).change( loadDatasetFromForm.bind(g) );
 	}
+
+
 	$('#sectors').change(sectorChanged);
 	$.ajax( 'static/data/datasets.json' ).success( loadedList ).fail( dang.bind(this, "loading datasets failed") );
 	$.ajax( 'static/data/sectors.json' ).success( loadedSectors ).fail( dang.bind(this, "loading sectors failed") );
 	$('#show-map-control').click( showMap ); 
+	$('#controls-hide').click( hideControls );
+	$('#controls-show').click( showControls );
 	initMap();
 	loadTimeline();
 	if( !countryCode )
@@ -51,6 +55,14 @@ $(document).ready(function(){
 		showMap();
 	}
 });
+function hideControls()
+{
+	$('#controls-box').animate( { top: -$('#controls-box').height()-10+"px" } );
+}
+function showControls()
+{
+	$('#controls-box').animate( { top: "0px" } );
+}
 function showMap() 
 { 
 	$('#map').css('left','0'); 
