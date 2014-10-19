@@ -18,7 +18,8 @@ var optionstl = {
 		height: '99%',
 		start: '2004',
 		end: '2014',
-		template: formatActivity
+		template: formatActivity,
+		selectable: false,
 };
 var timelinetl;
 var graphs = [ { id: 0, items: [] }, { id: 1, items: [] } ];
@@ -212,6 +213,12 @@ function loadedTimeline( ajax )
 	{
 		timelinetl.setItems( ajax.results );
 	}
+
+	$('.item').mouseenter(function() {
+		$(this).find('.details').popover('show');
+	}).mouseleave(function() {
+		$(this).find('.details').popover('hide');
+	});
 }
 
 var groups;
@@ -304,8 +311,19 @@ function d(x)
 
 function formatActivity(activity)
 {
-	return "<strong>" + activity.title + "</strong><br>"
-	+ "<p>" + (activity.description ? activity.description : '') + "<br>"
-	+ activity.sector.name + "</p>";
+	content = '<strong '
+	+      'type="button" '
+	+      'class="details" '
+	+      'data-container="body" '
+	+      'data-title="' + activity.sector.name + '" '
+	+      'data-toggle="popover" '
+	+      'data-placement="top" '
+	+      'data-content="' + activity.description + '"'
+	+'>' + activity.title + '</strong>';
 
+	// if (activity.uri) {
+	// 	content += '<a class="btn btn-default btn-xs btn-link" href="' + activity.uri + '">Project Site</a>';
+	// }
+
+	return content;
 }
