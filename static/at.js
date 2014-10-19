@@ -79,7 +79,8 @@ function showControls()
 }
 function showMap() 
 { 
-	$('#map').css('left','0'); 
+	$('#map').fadeIn();
+	$('#map').css("left","0");
 	var mm = $('#map-message');
 	var border_w = 10;
 	mm.css( 'top',($(window).height()/3)+"px" );
@@ -91,7 +92,7 @@ function showMap()
 } 
 function hideMap() 
 { 
-	$('#map').css('left','-100%'); 
+	$('#map').fadeOut();
 } 
 function loadDatasetFromForm()
 {
