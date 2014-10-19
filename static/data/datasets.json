@@ -90,7 +90,7 @@
 		"modifier": 1
 	},
 	"SG.VAW.REAS.ZS": {
-		"name":"Women who believe a husband is justified in beating his wife (any of five reasons) (%)",
+		"name":"Women believing husband justified beating his wife (%)",
 		"relation":"of",
 		"units": "Percentage",
 		"modifier": 1
@@ -132,9 +132,15 @@
 		"modifier": 1
 	},
 	"SH.MLR.TRET.ZS": {
-		"name":"Children with fever receiving antimalarial drugs (% of children under age 5 with fever)",
+		"name":"Children receiving antimalarial drugs (%)",
 		"relation":"of",
 		"units": "Percentage",
+		"modifier": 1
+	},
+	"SH.MED.PHYS.ZS": {
+		"name":"Physicians",
+		"relation":"of",
+		"units": "per 1,000 people",
 		"modifier": 1
 	}
 }
