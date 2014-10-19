@@ -263,6 +263,8 @@ function setGraph(g, id)
 	}
 	var containerg = document.getElementById('vis-g');
  	groups = new vis.DataSet();
+	optionsg.legend = { enabled: true};
+        optionsg.legend= {};
 	for(i=0;i<graphs.length;++i)
 	{
 		var g1 = graphs[i].id;
@@ -270,12 +272,19 @@ function setGraph(g, id)
 		{
 			var group = {
         			id: g1,
-        			content: "g1"+g,
-        			options: {  drawPoints: false }
+        			content: graphs[g1].dataset.name+" ("+graphs[g1].dataset.units+")",
+        			options: { drawPoints: {} }
 			};
 			if( g1%2==1 )
 			{
 				group.options.yAxisOrientation= 'right';
+				optionsg.legend.right = { position: "bottom-right" };
+				group.options.drawPoints.style = "square";
+			}
+			else
+			{
+				optionsg.legend.left = { position: "bottom-left" };
+				group.options.drawPoints.style = "circle";
 			}
     			groups.add(group);
 		}
