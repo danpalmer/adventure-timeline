@@ -240,6 +240,7 @@ function loadedTimeline( ajax )
 			optionsg.start = c.start;
 			optionsg.end = c.end;
 			Graph2d.setOptions( optionsg );
+			updateMargins();
 		});
 		updateMargins();
 	}
@@ -354,6 +355,10 @@ function d(x)
 
 function formatActivity(activity)
 {
+	if( !activity.sector ) { activity.sector = {}; }
+	if( !activity.sector.name ) { activity.sector.name="*NO-SECTOR*"; }
+	if( !activity.description ) { activity.description="*NO-DESCRIPTION*"; }
+	if( !activity.title ) { activity.title="*NO-TITLE*"; }
 	content = '<strong '
 	+      'type="button" '
 	+      'class="details" '
